@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import "tailwindcss";
+
+@theme{
+
+    --color-primary: #4F46E5;
+    --color-secondary: #F59E0B;
+    --color-accent: #10B981;
+    --color-background: #F3F4F6;
+    --color-text: #111827;
+    --color-border: #D1D5DB;
+    --color-error: #EF4444;
+    --color-success: #10B981;
+    --color-warning: #F59E0B;
+    --color-info: #3B82F6;
+    --color-light: #F9FAFB;
+    --color-dark: #1F2937;
+    --color-muted: #9CA3AF;
+    --color-highlight: #F3F4F6;
+    --color-link: #3B82F6;
+    --color-link-hover: #2563EB;
+    --color-shadow: rgba(0, 0, 0, 0.1);
+    --color-shadow-dark: rgba(0, 0, 0, 0.2);
+    --color-border-light: #E5E7EB;
+    --color-border-dark: #374151;   
+}
+
+*{
+    font-family: Outfit;
+}
+
+.active {
+    @apply text-primary;
+    @apply border-b-1 border-primary;
+}
+::-webkit-scrollbar {
+    @apply hidden;
+}
+.grid-cols-auto {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
