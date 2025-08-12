@@ -34,7 +34,7 @@
     @apply border-b-1 border-primary;
 }
 ::-webkit-scrollbar {
-    @apply hidden;
+    @apply hidden;  
 }
 .grid-cols-auto {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
