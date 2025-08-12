@@ -11,7 +11,6 @@ import userRoute from './routes/userRoute.js'
 
 // app initialization
 const app = express()
-const PORT = process.env.PORT || 5000
 connectDB()
 connectCloudinary()
 
@@ -30,7 +29,3 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Prescripto API')
 })
 
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
-})
