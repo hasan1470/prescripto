@@ -29,4 +29,3 @@ dist-ssr
 .env.development
 .env.production
 
-git config --global user.email "abdullahhasan0179160@gmail.com"
