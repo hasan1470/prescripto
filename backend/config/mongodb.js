@@ -1,25 +1,10 @@
-import mongoose from "mongoose"
-import "dotenv/config"
-
-
-
-// MongoDB connection
-const connectDB = async () => {
-  try {
-
-    mongoose.connection.on("connected", () => {
-      console.log("MongoDB connected")
-    })
-    await mongoose.connect(`${process.env.MONGODB_URL}/prescripto`, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
-    console.log("MongoDB connected successfully")
-  } catch (error) {
-    console.error("MongoDB connection failed:", error.message)
-    process.exit(1) // Exit the process with failure
-  }
+import mongoose from "mongoose";
+let connection;
+export default async function connectDB() {
+  if (mongoose.connection.readyState === 1) return mongoose.connection;
+  if (!process.env.MONGODB_URL) throw new Error("Database is not configured");
+  if (!connection) connection = mongoose.connect(process.env.MONGODB_URL, {
+    dbName: "prescripto", serverSelectionTimeoutMS: 10000,
+  }).catch(error => { connection = undefined; throw error; });
+  return connection;
 }
-
-
-export default connectDB

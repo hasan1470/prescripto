@@ -2,7 +2,7 @@ import validator from "validator";
 import bcrypt from "bcrypt";
 import { v2 as cloudinary } from "cloudinary";
 import doctorModel from "../models/doctorModel.js";
-import jwt from "jsonwebtoken";
+import { issueToken } from "../lib/auth.js";
 import appointmentModel from "../models/appointmentModel.js";
 import userModel from "../models/userModel.js";
 
@@ -85,7 +85,7 @@ const addDoctor = async (req, res) => {
 
     // send success response
     res
-      .json({ message: "Doctor added successfully", doctor: newDoctor, success: true });
+      .json({ message: "Doctor added successfully", doctor: { ...newDoctor.toObject(), password: undefined }, success: true });
   } catch (error) {
     console.log(error);
     res
@@ -111,7 +111,7 @@ const loginAdmin = async (req, res) => {
       password == process.env.ADMIN_PASSWORD
     ) {
       // generate JWT token
-      const token = jwt.sign(email + password, process.env.JWT_SECRET);
+      const token = issueToken("admin", "administrator");
       res
         .json({
           success: true,

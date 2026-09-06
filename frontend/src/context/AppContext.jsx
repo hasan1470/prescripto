@@ -39,7 +39,7 @@ const AppContextProvider = (props) => {
             if (data.success) {
                 setUserData(data.userData);
             } else {
-                toast.error(" error here");
+                toast.error(data.message || "Unable to load your profile.");
             }
 
 
@@ -50,6 +50,17 @@ const AppContextProvider = (props) => {
 
     }
     
+  useEffect(() => {
+    const interceptor = axios.interceptors.response.use(response => response, error => {
+      if (error.response?.status === 401 && error.config?.headers?.get?.("token") === token) {
+        localStorage.removeItem("token");
+        setToken("");
+      }
+      return Promise.reject(error);
+    });
+    return () => axios.interceptors.response.eject(interceptor);
+  }, [token]);
+
     const value = {
 
         doctors,

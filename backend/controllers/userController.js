@@ -1,7 +1,7 @@
 import validator from 'validator';
 import bcrypt from 'bcrypt';
 import userModel from '../models/userModel.js';
-import jwt from 'jsonwebtoken';
+import { issueToken } from "../lib/auth.js";
 import {v2 as cloudinary} from 'cloudinary';
 import doctorModel from '../models/doctorModel.js';
 import appointmentModel from '../models/appointmentModel.js';
@@ -41,7 +41,7 @@ const registerUser = async (req, res) => {
     const newUser = new userModel(userData);
     const user = await newUser.save();
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
+    const token = issueToken("user", user._id)
 
     res.json({success:true, token})
 
@@ -76,7 +76,7 @@ const loginUser = async (req, res) => {
         }
     
         // Generate JWT token
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+        const token = issueToken("user", user._id);
     
         res.json({ success: true, token });
     

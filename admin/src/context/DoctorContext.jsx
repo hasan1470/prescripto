@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { createContext } from "react";
@@ -15,6 +16,17 @@ const DoctorContextProvider = ( props ) => {
   const [appointments, setAppointments] = useState([])
   const [dashData, setDashData] = useState(false)
   const [profileData, setProfileData] = useState(false)
+
+  useEffect(() => {
+    const interceptor = axios.interceptors.response.use(response => response, error => {
+      if (error.response?.status === 401 && error.config?.headers?.get?.("dToken") === dToken) {
+        localStorage.removeItem("dToken");
+        setDToken("");
+      }
+      return Promise.reject(error);
+    });
+    return () => axios.interceptors.response.eject(interceptor);
+  }, [dToken]);
 
   const getAppointments = async () => {
     try {

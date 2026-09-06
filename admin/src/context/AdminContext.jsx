@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createContext, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -14,6 +15,17 @@ const AdminContextProvider = ( props ) => {
   const [dashData, setDashData] = useState(false)
 
   const backendUrl = import.meta.env.VITE_BACKEND_URL
+
+  useEffect(() => {
+    const interceptor = axios.interceptors.response.use(response => response, error => {
+      if (error.response?.status === 401 && error.config?.headers?.get?.("aToken") === aToken) {
+        localStorage.removeItem("aToken");
+        setAToken("");
+      }
+      return Promise.reject(error);
+    });
+    return () => axios.interceptors.response.eject(interceptor);
+  }, [aToken]);
 
   const getAllDoctors = async () => {
 
