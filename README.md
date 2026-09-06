@@ -2,7 +2,7 @@
 
 **A complete clinic appointment workflow, ready to explore without an account.**
 
-[**Open the live demo →**](https://prescripto-doctorbooking.vercel.app) · [Try the staff desk](https://prescripto-doctorbooking.vercel.app/demo-desk) · [Connected staff app](https://prescripto-doctorbooking-admin.vercel.app)
+[**Open the live demo →**](https://prescripto-doctorbooking.vercel.app) · [Try the staff desk](https://prescripto-doctorbooking.vercel.app/demo-desk) · [Admin dashboard demo](https://prescripto-doctorbooking-admin.vercel.app)
 
 <p align="center"><img src="frontend/src/assets/assets_frontend/header_img.png" width="460" alt="Prescripto doctor illustration" /></p>
 
@@ -15,7 +15,7 @@
 | Manage bookings | Simulated payment, cancellation, booking export and reload persistence |
 | Visitor profile | Edit sample contact details and profile image |
 | Demo staff desk | Filter by doctor, complete/cancel bookings, pause/resume doctor availability |
-| Connected staff app | Protected administrator and doctor dashboards backed by MongoDB |
+| Admin dashboard | Sample doctors, appointment cancellation, availability changes and adding doctors; sign in with **admin / admin** |
 
 ### A two-minute walkthrough
 
@@ -25,7 +25,7 @@
 4. Open **Demo staff desk** to mark it complete, or book another appointment and cancel it.
 5. Use **Reset and start a fresh demo** in the footer to clear this browser's sample data.
 
-The public visitor demo uses fictional sample data stored locally. It does not create a real consultation, contact a doctor, or charge a payment card. The demo staff desk shares the visitor's local data; the separate connected staff application uses its own authenticated backend.
+The public visitor demo uses fictional sample data stored locally. It does not create a real consultation, contact a doctor, or charge a payment card. The demo staff desk shares the visitor's local data; the separate admin demo has its own sample workspace because it runs on a different domain. Use **admin / admin** for administrator access, or **doctor / doctor** for the sample doctor dashboard. These public demo credentials never authenticate against the real backend.
 
 ## Technology
 
@@ -48,7 +48,7 @@ Demo mode is enabled by default. No database, account, Stripe key or `.env` file
 
 1. Copy the `.env.example` files in `backend`, `frontend` and `admin` to `.env` in their respective folders.
 2. Configure MongoDB, a fresh `JWT_SECRET`, administrator credentials and Cloudinary in `backend/.env`.
-3. Set `VITE_DEMO_MODE=false` and `VITE_BACKEND_URL` in the visitor frontend; set the same backend URL in the staff app.
+3. Set `VITE_DEMO_MODE=false` and `VITE_BACKEND_URL` in the visitor frontend; set `VITE_DEMO_MODE=false` and the same backend URL in the staff app.
 4. For online payments, add `STRIPE_SECRET_KEY` and set `FRONTEND_URL` to the visitor site's exact origin.
 5. Install dependencies in each folder with `npm ci`. Run the backend with `npm start`, and either frontend with `npm run dev`.
 
@@ -61,7 +61,7 @@ Existing accounts created before the token update must sign in again. Use fresh 
 | Vercel project | Root | Build/output | Configuration |
 | --- | --- | --- | --- |
 | Visitor demo | `frontend` | Vite / `dist` | No secrets needed; demo mode defaults to true |
-| Connected staff | `admin` | Vite / `dist` | `VITE_BACKEND_URL` |
+| Admin demo | `admin` | Vite / `dist` | No secrets needed; demo mode defaults to true |
 | API | `backend` | Existing `vercel.json` | MongoDB, JWT, admin and optional payment/upload keys |
 
 For connected visitor deployments set `VITE_DEMO_MODE=false`. Rebuild after changing any `VITE_` setting. No paid Vercel add-ons are required by the demo.
@@ -71,6 +71,7 @@ For connected visitor deployments set `VITE_DEMO_MODE=false`. Rebuild after chan
 ```bash
 npm test --prefix frontend
 npm test --prefix backend
+npm test --prefix admin
 npm run build --prefix frontend
 npm run build --prefix admin
 ```

@@ -5,7 +5,7 @@ import { AppContext } from '../../context/AppContext'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-import axios from 'axios'
+import axios from '../../lib/api'
 
 const DoctorProfile = () => {
 

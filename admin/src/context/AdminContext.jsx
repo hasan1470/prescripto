@@ -1,6 +1,7 @@
+import { sessionToken } from '../lib/api';
 import { useEffect } from "react";
 import { createContext, useState } from "react";
-import axios from "axios";
+import axios from "../lib/api";
 import { toast } from "react-toastify";
 
 
@@ -9,12 +10,12 @@ export const AdminContext = createContext()
 
 const AdminContextProvider = ( props ) => {
 
-  const [aToken, setAToken] = useState(localStorage.getItem("aToken")?localStorage.getItem("aToken") : '');
+  const [aToken, setAToken] = useState(() => sessionToken("aToken"));
   const [doctors, setDoctors] = useState([]);
   const [appointments, setAppintments] = useState([])
   const [dashData, setDashData] = useState(false)
 
-  const backendUrl = import.meta.env.VITE_BACKEND_URL
+  const backendUrl = import.meta.env.VITE_BACKEND_URL || window.location.origin
 
   useEffect(() => {
     const interceptor = axios.interceptors.response.use(response => response, error => {
@@ -35,7 +36,6 @@ const AdminContextProvider = ( props ) => {
         headers: {aToken}})
         if(data.success) {
           setDoctors(data.doctors);
-          console.log(data.doctors);
         } else {
           toast.error(data.message);
         }
@@ -92,6 +92,7 @@ const AdminContextProvider = ( props ) => {
       if (data.success) {
         toast.success(data.message)
         getAllAppointments()
+        getDashData()
       } else {
         toast.error(data.error)
       }
@@ -109,7 +110,6 @@ const AdminContextProvider = ( props ) => {
         headers: {aToken}})
       if (data.success) {
         setDashData(data.dashData)
-        console.log(data.dashData)
       } else {
         toast.error(data.error)
       }

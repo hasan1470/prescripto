@@ -21,7 +21,7 @@ const App = () => {
 
       <ToastContainer />
 
-      {DEMO_MODE && <div className="rounded-b-xl bg-indigo-50 px-4 py-3 text-center text-sm text-indigo-900">Portfolio demo · Book, pay, and cancel using sample data. Nothing is sent to a clinic and no money is charged. <a className="ml-2 underline" href="/my-appointments">My appointments</a> <a className="ml-2 underline" href="/demo-desk">Demo staff desk</a></div>}
+      {DEMO_MODE && <div className="rounded-b-xl bg-indigo-50 px-4 py-3 text-center text-sm text-indigo-900">Portfolio demo · Book, pay, and cancel using sample data. Nothing is sent to a clinic and no money is charged. <a className="ml-2 underline" href="/my-appointments">My appointments</a> <a className="ml-2 underline" href="/demo-desk">Demo staff desk</a> <a className="ml-2 underline font-semibold" href={import.meta.env.VITE_ADMIN_URL || "https://prescripto-doctorbooking-admin.vercel.app"} target="_blank" rel="noreferrer">Admin dashboard · admin / admin</a></div>}
       <Navbar />
 
       <Routes>

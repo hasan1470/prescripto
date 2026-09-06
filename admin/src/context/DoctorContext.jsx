@@ -1,5 +1,6 @@
+import { sessionToken } from '../lib/api';
 import { useEffect } from "react";
-import axios from "axios";
+import axios from "../lib/api";
 import { useState } from "react";
 import { createContext } from "react";
 import { toast } from "react-toastify";
@@ -9,9 +10,9 @@ export const DoctorContext = createContext()
 
 const DoctorContextProvider = ( props ) => {
 
-  const backendUrl = import.meta.env.VITE_BACKEND_URL
+  const backendUrl = import.meta.env.VITE_BACKEND_URL || window.location.origin
 
-  const [dToken, setDToken] = useState(localStorage.getItem("dToken")?localStorage.getItem("dToken") : '');
+  const [dToken, setDToken] = useState(() => sessionToken("dToken"));
 
   const [appointments, setAppointments] = useState([])
   const [dashData, setDashData] = useState(false)
@@ -35,7 +36,6 @@ const DoctorContextProvider = ( props ) => {
 
       if (data.success) {
         setAppointments(data.appointments)
-        console.log(data.appointments)
       } else {
         toast.error(data.message);
       }
@@ -53,6 +53,7 @@ const DoctorContextProvider = ( props ) => {
       if(data.success) {
         toast.success(data.message)
         getAppointments()
+        getDashData()
       } else {
         toast.error(data.message);
       }
@@ -70,6 +71,7 @@ const DoctorContextProvider = ( props ) => {
       if(data.success) {
         toast.success(data.message)
         getAppointments()
+        getDashData()
       } else {
         toast.error(data.message);
       }

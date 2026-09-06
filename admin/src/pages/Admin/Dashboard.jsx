@@ -69,7 +69,7 @@ const Dashboard = () => {
                   : item.isCompleted
                   ? <p className='text-green-400 text-xs font-medium'>Completed</p>
                   :  <div className='flex'>
-                  <img onClick={() => cancelAppointment(item._id)} className='w-10 cursor-pointer' src={assets.cancel_icon} alt='' />
+                  <button type="button" aria-label={`Cancel appointment ${item._id}`} onClick={() => cancelAppointment(item._id)}><img className="w-10" src={assets.cancel_icon} alt="" /></button>
                 </div>
 
                 }

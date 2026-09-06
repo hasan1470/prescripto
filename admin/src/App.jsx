@@ -1,10 +1,11 @@
+import AdminDemoNote from './pages/AdminDemoNote';
 import React, { useContext } from 'react'
 import Login from './pages/Login'
 import { ToastContainer, toast } from 'react-toastify';
 import { AdminContext } from './context/AdminContext';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Admin/Dashboard';
 import AllApointments from './pages/Admin/AllApointments';
 import AddDoctor from './pages/Admin/AddDoctor';
@@ -23,12 +24,12 @@ const App = () => {
     <div className='bg-gray-100 min-h-screen'>
       
       <ToastContainer />
-      <Navbar />
+      <AdminDemoNote /><Navbar />
       <div className='flex items-start'>
         <Sidebar />
         <Routes>
           {/*Admin route */}
-          <Route path='/' element={<></>} />
+          <Route path='/' element={<Navigate replace to={aToken?'/admin-dashboard':'/doctor-dashboard'} />} />
           <Route path='/admin-dashboard' element={<Dashboard />} />
           <Route path='/add-doctor' element={<AddDoctor />} />
           <Route path='/all-appointments' element={<AllApointments />} />
@@ -37,7 +38,7 @@ const App = () => {
           <Route path='/doctor-profile' element={<DoctorProfile />} />
           <Route path='/doctor-dashboard' element={<DoctorDashboard />} />
           <Route path='/doctor-appointments' element={<DoctorAppointments />} />
-        </Routes>
+        <Route path='*' element={<Navigate replace to={aToken?'/admin-dashboard':'/doctor-dashboard'} />} /></Routes>
       </div>
 
     </div>

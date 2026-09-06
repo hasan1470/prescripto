@@ -9,18 +9,11 @@ const Navbar = () => {
 
   const navigate = useNavigate()
   const { aToken, setAToken } = useContext(AdminContext)
-  const { dToken, setDToken } = useContext(DoctorContext)
+  const { setDToken } = useContext(DoctorContext)
   const logout = () => {
-
-      navigate('/login')
-      aToken && setAToken('')
-      aToken && localStorage.removeItem('aToken')
-      window.location.reload()
-
-      dToken && setDToken('')
-      dToken && localStorage.removeItem('dToken')
-      window.location.reload()
-
+      setAToken(''); setDToken('');
+      localStorage.removeItem('aToken'); localStorage.removeItem('dToken');
+      navigate('/login');
   }
 
   return (

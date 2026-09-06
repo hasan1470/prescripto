@@ -1,3 +1,4 @@
+const ADMIN_URL = import.meta.env.VITE_ADMIN_URL || 'https://prescripto-doctorbooking-admin.vercel.app';
 import React, { useContext, useState } from 'react'
 import { assets } from '../assets/assets_frontend/assets'
 import { NavLink, useNavigate } from 'react-router-dom'
@@ -32,6 +33,7 @@ const Navbar = () => {
             <NavLink to='/about'>
                 <li className='py-1'>About</li>
             </NavLink>
+            <a href={ADMIN_URL} target="_blank" rel="noreferrer" className="py-1 text-primary font-semibold">Admin demo</a>
             <NavLink to='/contact'>
                 <li className='py-1'>Contact</li>
             </NavLink>
@@ -64,6 +66,7 @@ const Navbar = () => {
                     <NavLink onClick={()=> setShowMenu(false)} to = '/doctors'>All Doctors</NavLink>
                     <NavLink onClick={()=> setShowMenu(false)} to = '/my-appointments'>My Appointments</NavLink>
                     <NavLink onClick={()=> setShowMenu(false)} to = '/about'>About</NavLink>
+                    <a href={ADMIN_URL} target="_blank" rel="noreferrer" onClick={()=>setShowMenu(false)} className="text-primary">Admin demo · admin / admin</a>
                     <NavLink onClick={()=> setShowMenu(false)} to = '/contact'>Contact</NavLink>
                 </ul>
             </div>
