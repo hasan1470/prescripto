@@ -1,3 +1,4 @@
+import { cancelBooking } from "../lib/booking.js";
 import validator from "validator";
 import bcrypt from "bcrypt";
 import { v2 as cloudinary } from "cloudinary";
@@ -159,34 +160,9 @@ const appointmentsAdmin = async (req, res) => {
 }
 
 // API for appointments cencelled
-const appointmentCancel = async (req, res) => {
-
-  try {
-
-    const { appointmentId} = req.body
-    const appointmentData = await appointmentModel.findById(appointmentId)
-
-
-    await appointmentModel.findByIdAndUpdate(appointmentId, {cancelled:true})
-
-
-    // releasing doctor slot
-    const {docId, slotDate, slotTime} = appointmentData
-    const doctorData = await doctorModel.findById(docId)
-
-    let slot_booked = doctorData.slot_booked
-
-    slot_booked[slotDate] = slot_booked[slotDate].filter(e => e !== slotTime)
-
-    await doctorModel.findByIdAndUpdate(docId, {slot_booked})
-
-    res.json({success: true, message: 'Appointment Cancelled' })
-    
-    
-  } catch (error) {
-    console.error(error);
-    res.json({ success: false, message: error.message });
-  }
+const appointmentCancel = async (req,res) => {
+  try {const success=await cancelBooking(req.body.appointmentId,{});res.json({success,message:success?"Appointment cancelled.":"This appointment is already closed or unavailable."});}
+  catch{res.status(400).json({success:false,message:"Unable to cancel this appointment."});}
 }
 
 //API to get dashboard data for admin panel

@@ -1,5 +1,7 @@
+import { DEMO_MODE } from "./lib/demo-mode";
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
+import DemoDesk from './pages/DemoDesk.jsx'
 import Home from './pages/Home.jsx'
 import Doctors from './pages/Doctors.jsx'
 import Contact from './pages/Contact.jsx'
@@ -10,7 +12,7 @@ import MyProfile from './pages/MyProfile.jsx'
 import Appointment from './pages/Appointment.jsx'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 
 const App = () => {
@@ -19,6 +21,7 @@ const App = () => {
 
       <ToastContainer />
 
+      {DEMO_MODE && <div className="rounded-b-xl bg-indigo-50 px-4 py-3 text-center text-sm text-indigo-900">Portfolio demo · Book, pay, and cancel using sample data. Nothing is sent to a clinic and no money is charged. <a className="ml-2 underline" href="/my-appointments">My appointments</a> <a className="ml-2 underline" href="/demo-desk">Demo staff desk</a></div>}
       <Navbar />
 
       <Routes>
@@ -33,6 +36,8 @@ const App = () => {
         <Route path='/appointment/:docID' element={<Appointment />} />
         <Route path='/my-profile' element={<MyProfile />} />
 
+        <Route path='/demo-desk' element={<DemoDesk/>} />
+        <Route path='*' element={<div className="py-16 text-center"><h1 className="text-3xl font-semibold">Page not found</h1><a className="mt-4 inline-block underline" href="/doctors">Browse doctors</a></div>} />
       </Routes>
 
       <Footer />

@@ -1,6 +1,8 @@
+import { DEMO_MODE } from "../lib/demo-mode";
+import { resetDemo } from "../lib/demo-api";
 import React, { useContext, useState } from 'react';
-import { AppContext } from '../context/AppContext';
-import axios from 'axios';
+import { AppContext } from '../context/app-context';
+import axios from '../lib/api';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 
@@ -46,11 +48,12 @@ const Login = () => {
   }
 
   useEffect(() => {
-    if (token) {
+    if (token && !DEMO_MODE) {
       window.location.href = '/';
     }
 }, [token]);
 
+  if(DEMO_MODE) return <div className="mx-auto my-16 max-w-xl rounded-2xl border p-8"><h1 className="text-3xl font-semibold">Explore Prescripto</h1><p className="my-4 text-gray-600">You are using a sample visitor profile. Book an appointment, try a simulated payment, then manage the booking from the staff desk. Data stays in this browser.</p><a href="/doctors" className="inline-block rounded-full bg-primary px-6 py-3 text-white">Browse doctors</a><button className="ml-4 underline" onClick={()=>{resetDemo();window.location.href='/doctors';}}>Reset demo data</button></div>;
   return (
     <form onSubmit={handleSubmit} className='min-h-[80vh] flex items-center'>
       <div className='flex flex-col gap-3 m-auto items-start p-8 min-w-[340px] sm:min-w-96 border rounded-xl text-gray-500 text-sm shadow-lg'>

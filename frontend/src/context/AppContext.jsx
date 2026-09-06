@@ -1,19 +1,20 @@
-import { createContext, useEffect, useState } from "react";
-import axios from "axios";
+import { DEMO_MODE } from "../lib/demo-mode";
+import { useCallback, useEffect, useState } from "react";
+import axios from "../lib/api";
 import { toast } from "react-toastify";
 
-export const AppContext = createContext()
+import { AppContext } from "./app-context";
 
 const AppContextProvider = (props) => {
 
     const currencySymbol = ["$", "€", "£", "₹"]
-    const backendUrl = import.meta.env.VITE_BACKEND_URL
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || ""
     const [doctors, setDoctors] = useState([])
-    const [token, setToken] = useState(localStorage.getItem('token') || '');
+    const [token, setToken] = useState(DEMO_MODE ? 'demo-session' : localStorage.getItem('token') || '');
     const [userData, setUserData] = useState(false);
 
 
-    const getDoctorsData = async () => {
+    const getDoctorsData = useCallback(async () => {
         try { 
             const {data} = await axios.get(`${backendUrl}/api/doctors/list`);
             if (data.success) {
@@ -27,9 +28,9 @@ const AppContextProvider = (props) => {
             toast.error(error.message)
         }
 
-    }
+    }, [backendUrl])
 
-    const loadUserData = async () => {
+    const loadUserData = useCallback(async () => {
 
         try { 
 
@@ -48,7 +49,7 @@ const AppContextProvider = (props) => {
             toast.error( error.message);
         }
 
-    }
+    }, [backendUrl, token])
     
   useEffect(() => {
     const interceptor = axios.interceptors.response.use(response => response, error => {
@@ -79,7 +80,7 @@ const AppContextProvider = (props) => {
 
     useEffect (() => {
         getDoctorsData();
-    }, []);
+    }, [getDoctorsData]);
 
     useEffect (() => {
         if (token) {
@@ -87,7 +88,7 @@ const AppContextProvider = (props) => {
         } else {
             setUserData(false);
         }
-    }, [token]);
+    }, [token, loadUserData]);
 
 
 

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { assets } from '../assets/assets_frontend/assets'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { AppContext } from '../context/AppContext';
+import { AppContext } from '../context/app-context';
 
 const Navbar = () => {
 
@@ -28,6 +28,7 @@ const Navbar = () => {
             <NavLink to='/doctors'>
                 <li className='py-1'>All Doctors</li>
             </NavLink>
+            <NavLink to='/my-appointments'><li className='py-1'>Appointments</li></NavLink>
             <NavLink to='/about'>
                 <li className='py-1'>About</li>
             </NavLink>
@@ -38,17 +39,17 @@ const Navbar = () => {
         <div className='flex items-center gap-4'>
             {
                 token && userData ? 
-                <div className='flex items-center gap-2 cursor-pointer relative group'>
+                <details className='relative'><summary className='flex items-center gap-2 cursor-pointer list-none' aria-label='Account menu'>
                     <img className='w-8 rounded-full' src={userData.image} alt='' />
                     <img className='w-2.5' src={assets.dropdown_icon} alt='' />
-                    <div className='absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block'>
+                    </summary><div className='absolute right-0 top-10 text-base font-medium text-gray-600 z-20'>
                         <div className='min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4 shadow-lg'>
-                            <p onClick={()=>navigate('/my-profile')} className='hover:text-black cursor-pointer'>My Profile</p>
-                            <p onClick={()=>navigate('/my-appointments')} className='hover:text-black cursor-pointer'>My Appointments</p>
-                            <p onClick={handleLogout} className='hover:text-black cursor-pointer'>Logout</p>
+                            <NavLink to='/my-profile'>My Profile</NavLink>
+                            <NavLink to='/my-appointments'>My Appointments</NavLink>
+                            <button type='button' onClick={handleLogout} className='hover:text-black cursor-pointer'>Logout / reset demo</button>
                         </div>
                     </div>
-                </div>
+                </details>
                 : <button onClick={()=>navigate('/login')} className='bg-primary text-white px-8 py-3 rounded-full font-light hidden md:block cursor-pointer'>Create Account</button>
             }
             <img onClick={() => setShowMenu(!showMenu)} className='w-6 cursor-pointer md:hidden' src={assets.menu_icon} alt="Menu Icon" />
@@ -61,6 +62,7 @@ const Navbar = () => {
                 <ul className='flex flex-col items-center gap-2 mt-5 px-5 text-lg font-medium'>  
                     <NavLink onClick={()=> setShowMenu(false)} to = '/'>Home</NavLink>
                     <NavLink onClick={()=> setShowMenu(false)} to = '/doctors'>All Doctors</NavLink>
+                    <NavLink onClick={()=> setShowMenu(false)} to = '/my-appointments'>My Appointments</NavLink>
                     <NavLink onClick={()=> setShowMenu(false)} to = '/about'>About</NavLink>
                     <NavLink onClick={()=> setShowMenu(false)} to = '/contact'>Contact</NavLink>
                 </ul>

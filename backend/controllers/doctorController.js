@@ -1,3 +1,4 @@
+import { cancelBooking } from "../lib/booking.js";
 import doctorModel from "../models/doctorModel.js";
 import bcrypt from 'bcrypt'
 import { issueToken } from "../lib/auth.js";
@@ -84,8 +85,8 @@ const appointmentComplete = async (req, res) => {
     const { appointmentId} = req.body
     const appointmentData = await appointmentModel.findById(appointmentId)
 
-    if (appointmentData && appointmentData.docId === docId) {
-      await appointmentModel.findByIdAndUpdate(appointmentId,  {isCompleted:true})
+    if (appointmentData && !appointmentData.cancelled && !appointmentData.isCompleted && appointmentData.docId === docId) {
+      await appointmentModel.findOneAndUpdate({_id:appointmentId,docId,cancelled:false}, {isCompleted:true})
       return res.json({success:true, message:'Appointment Complete'})
     } else {
       return res.json({success:false, message:'Mark Failed'})
@@ -98,24 +99,9 @@ const appointmentComplete = async (req, res) => {
 }
 
 //API to cancel appoint complete for doctor panel
-const appointmentCancel = async (req, res) => {
-  try {
-  
-    const docId = req.docId;
-    const {appointmentId} = req.body
-    const appointmentData = await appointmentModel.findById(appointmentId)
-
-    if (appointmentData && appointmentData.docId === docId) {
-      await appointmentModel.findByIdAndUpdate(appointmentId,  {cancelled:true})
-      return res.json({success:true, message:'Appointment Cancelled'})
-    } else {
-      return res.json({success:false, message:'Cancelation Failed'})
-    }
-    
-  } catch (error) {
-    console.log(error);
-    res.json({ message: error.message, Place: "appointmentComplete controller" });
-  }
+const appointmentCancel = async (req,res) => {
+  try {const success=await cancelBooking(req.body.appointmentId,{docId:req.docId});res.json({success,message:success?"Appointment cancelled.":"This appointment is already closed or unavailable."});}
+  catch{res.status(400).json({success:false,message:"Unable to cancel this appointment."});}
 }
 
 
