@@ -26,21 +26,21 @@ const DoctorDashboard = () => {
               <img className='w-14' src={assets.earning_icon } alt=''/>
               <div>
                 <p className='text-xl font-semibold text-gray-600'>{currencySymbol[0]}{dashData.earnings}</p>
-                <p className='text-gray-400'>Earnings</p>
+                <p className='text-gray-600'>Earnings</p>
               </div>
             </div>
             <div className='flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-200 cursor-pointer hover:scale-105 transition-all'>
               <img className='w-14' src={assets.appointments_icon} alt=''/>
               <div>
                 <p className='text-xl font-semibold text-gray-600'>{dashData.appointments}</p>
-                <p className='text-gray-400'>Appointments</p>
+                <p className='text-gray-600'>Appointments</p>
               </div>
             </div>
             <div className='flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-200 cursor-pointer hover:scale-105 transition-all'>
               <img className='w-14' src={assets.patients_icon} alt=''/>
               <div>
                 <p className='text-xl font-semibold text-gray-600'>{dashData.patients}</p>
-                <p className='text-gray-400'>Patients</p>
+                <p className='text-gray-600'>Patients</p>
               </div>
             </div>
     
@@ -64,9 +64,9 @@ const DoctorDashboard = () => {
           
                           {
                             item.cancelled
-                            ? <p className='text-red-400 text-xs font-medium'>Cancelled</p>
+                            ? <p className='text-red-600 text-xs font-medium'>Cancelled</p>
                             : item.isCompleted
-                            ? <p className='text-green-400 text-xs font-medium'>Completed</p>
+                            ? <p className='text-green-700 text-xs font-medium'>Completed</p>
                             :  <div className='flex'>
                             <button type="button" aria-label={`Cancel appointment ${item._id}`} onClick={() => cancelAppointment(item._id)}><img className="w-10" src={assets.cancel_icon} alt="" /></button>
                             <button type="button" aria-label={`Complete appointment ${item._id}`} onClick={() => completeAppointment(item._id)}><img className="w-10" src={assets.tick_icon} alt="" /></button>

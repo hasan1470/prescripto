@@ -22,7 +22,7 @@ const Navbar = () => {
     <div className='flex justify-between items-center py-4 text-sm mb-5 border-b border-b-gray-400'>
 
         <img onClick={()=>navigate('/')} className='w-44 cursor-pointer' src={assets.logo} alt="Logo" />
-        <ul className='hidden md:flex item-start gap-5 font-medium'>
+        <ul className='hidden xl:flex item-start gap-5 font-medium'>
             <NavLink to='/'>
                 <li className='py-1'>Home</li>
             </NavLink>
@@ -52,11 +52,11 @@ const Navbar = () => {
                         </div>
                     </div>
                 </details>
-                : <button onClick={()=>navigate('/login')} className='bg-primary text-white px-8 py-3 rounded-full font-light hidden md:block cursor-pointer'>Create Account</button>
+                : <button onClick={()=>navigate('/login')} className='bg-primary text-white px-8 py-3 rounded-full font-light hidden xl:block cursor-pointer'>Create Account</button>
             }
-            <img onClick={() => setShowMenu(!showMenu)} className='w-6 cursor-pointer md:hidden' src={assets.menu_icon} alt="Menu Icon" />
+            <img onClick={() => setShowMenu(!showMenu)} className='w-6 cursor-pointer xl:hidden' src={assets.menu_icon} alt="Menu Icon" />
             { /* Mobile Menu */}
-            <div className={` ${showMenu ? 'fixed w-full' : 'h-0 w-0'} md:hidden right-0 top-0 bottom-0 z-20 overflow-hidden bg-white transition-all`}>
+            <div className={` ${showMenu ? 'fixed w-full' : 'h-0 w-0'} xl:hidden right-0 top-0 bottom-0 z-20 overflow-hidden bg-white transition-all`}>
                 <div className='flex items-center justify-between px-5 py-6'>
                     <img onClick={()=> navigate('/')} className='w-36 cursor-pointer' src={assets.logo} alt="logo" />
                     <img className = 'w-7 cursor-pointer' src={assets.cross_icon} onClick={() => setShowMenu(!showMenu)} alt="Cross" />

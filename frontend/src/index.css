@@ -39,3 +39,14 @@
 .grid-cols-auto {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
+/* Shared readable type scale for client pages and management screens. */
+@theme {
+  --text-xs: 0.875rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 1rem;
+  --text-sm--line-height: 1.5;
+  --text-base: 1.0625rem;
+  --text-base--line-height: 1.6;
+}
+body { font-size: 17px; line-height: 1.6; }
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]), textarea, select { font-size: max(1rem, 1em); }
