@@ -55,9 +55,9 @@ const DoctorDashboard = () => {
                   <div className='pt-4 border border-t-0 border-gray-100'>
                     {
                       dashData.latestAppointments.map((item, index) => (
-                        <div className='flex items-center px-6 py-3 gap-3 hover:bg-gray-100' key={index}>
+                        <div className='grid grid-cols-[40px_minmax(0,1fr)] sm:flex items-center px-3 sm:px-6 py-4 gap-3 hover:bg-gray-100 [&>:last-child]:col-start-2' key={index}>
                           <img className='rounded-full w-10' src={item.userData.image} alt='' />
-                          <div className='flex-1 text-sm'>
+                          <div className='min-w-0 flex-1 text-sm'>
                             <p className='text-gray-800 font-medium'>{item.userData.name}</p>
                             <p className='text-gray-600'>{slotDateFormat(item.slotDate)}</p>
                           </div>
